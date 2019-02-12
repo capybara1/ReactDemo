@@ -5,7 +5,7 @@ using Ical.Net.Serialization;
 using Newtonsoft.Json.Linq;
 using System;
 
-namespace Tasks
+namespace ReactDemo.Tasks
 {
     internal sealed class CalendarGenerator
     {
