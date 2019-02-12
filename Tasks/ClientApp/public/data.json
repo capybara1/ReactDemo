@@ -1,0 +1,82 @@
+{
+    "categories": [
+        {
+            "label": "Skiurlaub",
+            "tags": [ "Ski", "Sonne" ]
+        },
+        {
+            "label": "Wanderurlaub",
+            "tags": [ "Wandern", "Sonne" ]
+        },
+        {
+            "label": "Winterurlaub",
+            "tags": [ "Kalt" ]
+        },
+        {
+            "label": "Flugreise",
+            "tags": [ "Flug" ]
+        }
+    ],
+    "templates": [
+        {
+            "label": "Skihose",
+            "tags": [ "Ski" ]
+        },
+        {
+            "label": "Skihelm",
+            "tags": [ "Ski" ]
+        },
+        {
+            "label": "Skibrille",
+            "tags": [ "Ski" ]
+        },
+        {
+            "label": "Thermounterhose",
+            "tags": [ "Ski" ]
+        },
+        {
+            "label": "Skihandschuhe",
+            "tags": [ "Ski" ]
+        },
+        {
+            "label": "Skisocken",
+            "tags": [ "Ski" ]
+        },
+        {
+            "label": "Handwärmer",
+            "tags": [ "Ski" ]
+        },
+        {
+            "label": "Lippenbalsam",
+            "tags": [ "Ski" ]
+        },
+        {
+            "label": "Wanderschuhe",
+            "tags": [ "Wandern" ]
+        },
+        {
+            "label": "Wandersocken",
+            "tags": [ "Wandern" ]
+        },
+        {
+            "label": "Wanderstöcke",
+            "tags": [ "Wandern" ]
+        },
+        {
+            "label": "Sonnenschutz",
+            "tags": [ "Sonne" ]
+        },
+        {
+            "label": "Antischallkopfhörer",
+            "tags": [ "Flug" ]
+        },
+        {
+            "label": "Y-Adapter (3,5mm Klinke)",
+            "tags": [ "Flug" ]
+        },
+        {
+            "label": "Adapter für Entertainment-System (3,5mm Klinke)",
+            "tags": [ "Flug" ]
+        }
+    ]
+}
