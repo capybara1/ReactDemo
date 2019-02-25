@@ -1,4 +1,5 @@
 const { InjectManifest } = require('workbox-webpack-plugin');
+const WebpackShellPlugin = require('webpack-shell-plugin');
 const path = require('path');
 
 module.exports = {
@@ -12,6 +13,11 @@ module.exports = {
             };
             config.plugins.push(new InjectManifest(workboxConfigProd));
         }
+
+        config.plugins.push(new WebpackShellPlugin({
+            onBuildStart: ['node "scripts/generate_icons.js"'],
+        }));
+
         return config;
     }, 
     // jest: function(config) {
