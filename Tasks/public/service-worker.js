@@ -1,4 +1,4 @@
-workbox.precaching.precache(__precacheManifest);
+workbox.precaching.precacheAndRoute(__precacheManifest);
 
 workbox.routing.registerRoute(
     /events[$\?]/,
