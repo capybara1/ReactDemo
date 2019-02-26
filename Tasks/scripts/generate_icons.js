@@ -3,7 +3,7 @@ const fs = require('fs');
 const child_process = require('child_process');
 
 const source = path.resolve(__dirname, `../public/logo_512.svg`);
-const sizes = [512,256,192,144,128,96,72,64,48,32,16];
+const sizes = [512,192,144,96,72,48];
 
 sizes.forEach(size => {
     const target = path.resolve(__dirname, `../public/icon-${size}-${size}.png`);
