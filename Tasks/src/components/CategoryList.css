@@ -1,11 +1,11 @@
 :local(.list) {
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
- }
- 
- :local(.item) {
-    list-style: none;
-    display: inline-block;
-    margin: 0.3rem;
- }
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+:local(.item) {
+  list-style: none;
+  display: inline-block;
+  margin: 0.3rem;
+}
