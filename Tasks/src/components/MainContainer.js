@@ -1,15 +1,26 @@
+// @flow
+
 import React, { Component } from "react"; // Required for JSX
 
+import type { Category, Template, Task, TaskView } from "../shared/types"
 import MainComponent from "./MainComponent";
 import { TODAY, generateId } from "../shared/Utils";
 
-class MainContainer extends Component {
+opaque type Props = { };
+
+opaque type State = {
+    categories: ?Category[],
+    templates: ?Template[],
+    tasks: Task[],
+};
+
+class MainContainer extends Component<Props, State> {
 
     constructor() {
         super();
         this.state = {
             categories: null,
-            items: null,
+            templates: null,
             tasks: []
         };
     }
@@ -17,7 +28,7 @@ class MainContainer extends Component {
     async componentDidMount() {
         const response = await fetch("data.json");
         const data = await response.json();
-        this.setState(prevState => {
+        this.setState((prevState: State): State => {
             return {
                 ...prevState,
                 categories: data.categories.map(i => {
@@ -31,7 +42,7 @@ class MainContainer extends Component {
     }
 
     handleItemAdd = () => {
-        this.setState(prevState => {
+        this.setState((prevState: State): State => {
             return {
                 ...prevState,
                 tasks: prevState.tasks.concat([this.createTaskModel()])
@@ -39,9 +50,9 @@ class MainContainer extends Component {
         });
     }
 
-    handleItemChange = (id, event) => {
+    handleItemChange = (id: number, event: any) => {
         const {name, type, value, checked} = event.target;
-        this.setState(prevState => {
+        this.setState((prevState: State): State => {
             return {
                 ...prevState,
                 tasks: prevState.tasks.map(i => {
@@ -56,8 +67,8 @@ class MainContainer extends Component {
         });
     }
 
-    handleItemRemove = (id) => {
-        this.setState(prevState => {
+    handleItemRemove = (id: number) => {
+        this.setState((prevState: State): State => {
             return {
                 ...prevState,
                 tasks: prevState.tasks.filter(i => i.id !== id)
@@ -65,9 +76,12 @@ class MainContainer extends Component {
         });
     }
 
-    applyCategory = (id) => {
+    applyCategory = (id: number) => {
+        if (!this.state.categories) return;
         const category = this.state.categories.find(e => e.id === id);
+        if (!category) return;
         const tags = category.tags;
+        if (!this.state.templates) return;
         const newLabels = this.state.templates.filter(i => i.tags.some(t => tags.includes(t)))
             .map(i => i.label);
         if (newLabels.length > 0) {
@@ -81,7 +95,7 @@ class MainContainer extends Component {
         }
     }
 
-    createTaskModel(label = "") {
+    createTaskModel(label: string = "") {
         const result = {
             id: generateId(),
             due: TODAY,
@@ -90,7 +104,7 @@ class MainContainer extends Component {
         return result;
     }
 
-    handleSubmit = (event) => {
+    handleSubmit = (event: SyntheticEvent<>) => {
         event.preventDefault();
         const representation = this.state.tasks
             .map(this.mapToRepresentationModel);
@@ -98,8 +112,8 @@ class MainContainer extends Component {
         window.open("events?descr=" + data, "_blank");
     }
 
-    mapToRepresentationModel = (modelItem) => {
-        const result = { 
+    mapToRepresentationModel = (modelItem: Task): TaskView => {
+        const result: TaskView = { 
             label: modelItem.label
         };
         if (modelItem.due !== TODAY) {
