@@ -5,6 +5,7 @@ import React, { Component } from "react"; // Required for JSX
 import type { Category, Template, Task, TaskView } from "../shared/types";
 import MainComponent from "./MainComponent";
 import { TODAY, generateId } from "../shared/Utils";
+import { mapToRepresentationModel } from "../shared/converters";
 
 opaque type Props = {};
 
@@ -112,19 +113,9 @@ class MainContainer extends Component<Props, State> {
 
   handleSubmit = (event: SyntheticEvent<>) => {
     event.preventDefault();
-    const representation = this.state.tasks.map(this.mapToRepresentationModel);
+    const representation = this.state.tasks.map(mapToRepresentationModel);
     const data = encodeURIComponent(JSON.stringify(representation));
     window.open("events?descr=" + data, "_blank");
-  };
-
-  mapToRepresentationModel = (modelItem: Task): TaskView => {
-    const result: TaskView = {
-      label: modelItem.label
-    };
-    if (modelItem.due !== TODAY) {
-      result.due = modelItem.due;
-    }
-    return result;
   };
 
   render = () => (
