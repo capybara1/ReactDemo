@@ -1,8 +1,8 @@
 // Override default variables before the import
 
 $theme-colors: (
-    primary: #dceff2
+  primary: #dceff2
 );
 
 // Import Bootstrap and its default variables
-@import '~bootstrap/scss/bootstrap.scss';
+@import "~bootstrap/scss/bootstrap.scss";
