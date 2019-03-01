@@ -1,4 +1,13 @@
-workbox.precaching.precacheAndRoute(__precacheManifest);
+workbox.precaching.precache(__precacheManifest);
+
+workbox.precaching.precache([
+  "https://code.jquery.com/jquery-3.3.1.slim.min.js",
+  "https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js",
+  "https://use.fontawesome.com/releases/v5.7.1/js/solid.js",
+  "https://use.fontawesome.com/releases/v5.7.1/js/fontawesome.js"
+]);
+
+workbox.precaching.addRoute();
 
 workbox.routing.registerRoute(
   /data.json/,
