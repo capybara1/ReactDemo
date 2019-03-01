@@ -1,5 +1,10 @@
 workbox.precaching.precacheAndRoute(__precacheManifest);
 
+workbox.routing.registerRoute(
+  /data.json/,
+  new workbox.strategies.StaleWhileRevalidate()
+);
+
 workbox.routing.registerRoute(/events[$\?]/, ({ url }) => {
   const searchParams = new URL(url).searchParams;
   const descr = JSON.parse(searchParams.get("descr"));
