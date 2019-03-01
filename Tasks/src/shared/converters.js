@@ -1,4 +1,4 @@
-2; //@ flow
+//@ flow
 
 import type { Task, TaskView } from "./types";
 import { TODAY } from "./Utils";
