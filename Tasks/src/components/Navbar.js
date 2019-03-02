@@ -17,7 +17,16 @@ const Navbar = ({ label, href, children }) => (
       <span className="navbar-toggler-icon" />
     </button>
     <div id="navbar" className="collapse navbar-collapse">
-      <ul className="navbar-nav mr-auto">{children}</ul>
+      {children.some(i => !i.props.align || i.props.align === "left") ? (
+        <ul className="navbar-nav">
+          {children.filter(i => !i.props.align || i.props.align === "left")}
+        </ul>
+      ) : null}
+      {children.some(i => i.props.align === "right") ? (
+        <ul className="navbar-nav ml-md-auto">
+          {children.filter(i => i.props.align === "right")}
+        </ul>
+      ) : null}
     </div>
   </nav>
 );

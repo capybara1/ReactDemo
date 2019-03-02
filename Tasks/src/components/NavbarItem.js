@@ -10,10 +10,16 @@ const NavbarItem = ({ label, href, disabled, exact }) => {
       path={escapedHref}
       exact={exact}
       children={({ location, match }) => (
-        <li className={match ? "nav-item active" : "nav-item"}>
+        <li className="nav-item">
           <Link
-            aria-current={!!match || null}
-            className={disabled ? "nav-link disabled" : "nav-link"}
+            aria-current={(!disabled && !!match) || null}
+            className={
+              disabled
+                ? "nav-link disabled"
+                : match
+                ? "nav-link active"
+                : "nav-link"
+            }
             to={href}
           >
             {label}

@@ -13,7 +13,7 @@ const App = () => (
       <div>
         <Navbar label="Tasks" href="/">
           <NavbarItem label="Generator" exact href="/" />
-          <NavbarItem label="About" href="/about" />
+          <NavbarItem label="About" href="/about" align="right" />
         </Navbar>
         <Route exact path="/" component={MainContainer} />
         <Route path="/about" component={About} />
