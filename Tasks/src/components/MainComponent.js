@@ -40,7 +40,15 @@ const MainComponent = props => {
   );
   const result = (
     <main role="main" className="container">
-      {props.state.categories ? renderForm(props) : <Spinner />}
+      {props.state.isError ? (
+        <div className="alert alert-danger" role="alert">
+          Something went wrong
+        </div>
+      ) : props.state.isLoading ? (
+        <Spinner />
+      ) : (
+        renderForm(props)
+      )}
     </main>
   );
   return result;

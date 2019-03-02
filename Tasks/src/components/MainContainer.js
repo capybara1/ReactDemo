@@ -1,133 +1,109 @@
 // @flow
 
-import React, { Component } from "react"; // Required for JSX
+import React, { useState, useEffect } from "react"; // Required for JSX
 
 import type { Category, Template, Task, TaskView } from "../shared/types";
 import MainComponent from "./MainComponent";
 import { TODAY, generateId } from "../shared/Utils";
 import { mapToRepresentationModel } from "../shared/converters";
 
-opaque type Props = {};
+const MainContainer = () => {
+  const [categories, setCategories] = useState([]);
+  const [templates, setTemplates] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-opaque type State = {
-  categories: ?(Category[]),
-  templates: ?(Template[]),
-  tasks: Task[]
-};
+  const fetchData = async () => {
+    setIsError(false);
+    setIsLoading(true);
 
-class MainContainer extends Component<Props, State> {
-  constructor() {
-    super();
-    this.state = {
-      categories: null,
-      templates: null,
-      tasks: []
-    };
-  }
-
-  async componentDidMount() {
-    const response = await fetch("data.json");
-    const data = await response.json();
-    this.setState(
-      (prevState: State): State => {
-        return {
-          ...prevState,
-          categories: data.categories.map(i => {
-            i.id = generateId();
-            return i;
-          }),
-          templates: data.templates,
-          tasks: []
-        };
-      }
-    );
-  }
-
-  handleItemAdd = () => {
-    this.setState(
-      (prevState: State): State => {
-        return {
-          ...prevState,
-          tasks: prevState.tasks.concat([this.createTaskModel()])
-        };
-      }
-    );
-  };
-
-  handleItemChange = (id: number, event: any) => {
-    const { name, type, value, checked } = event.target;
-    this.setState(
-      (prevState: State): State => {
-        return {
-          ...prevState,
-          tasks: prevState.tasks.map(i => {
-            if (i.id === id) {
-              i[name] = type === "checkbox" ? checked : value;
-            }
-            return i;
-          })
-        };
-      }
-    );
-  };
-
-  handleItemRemove = (id: number) => {
-    this.setState(
-      (prevState: State): State => {
-        return {
-          ...prevState,
-          tasks: prevState.tasks.filter(i => i.id !== id)
-        };
-      }
-    );
-  };
-
-  applyCategory = (id: number) => {
-    if (!this.state.categories) return;
-    const category = this.state.categories.find(e => e.id === id);
-    if (!category) return;
-    const tags = category.tags;
-    if (!this.state.templates) return;
-    const newLabels = this.state.templates
-      .filter(i => i.tags.some(t => tags.includes(t)))
-      .map(i => i.label);
-    if (newLabels.length > 0) {
-      this.setState(prevState => {
-        const newTasks = newLabels.map(l => this.createTaskModel(l));
-        return {
-          ...prevState,
-          tasks: prevState.tasks.concat(newTasks)
-        };
-      });
+    try {
+      const response = await fetch("data.json");
+      const data = await response.json();
+      setCategories(
+        data.categories.map(i => {
+          i.id = generateId();
+          return i;
+        })
+      );
+      setTemplates(data.templates);
+    } catch (error) {
+      setIsError(true);
     }
+
+    setIsLoading(false);
   };
 
-  createTaskModel(label: string = "") {
+  useEffect(() => {
+    fetchData();
+  }, []); // No declared dependencies to state variables implies the effect is only run once
+
+  const createTaskModel = (label: string = "") => {
     const result = {
       id: generateId(),
       due: TODAY,
       label: label
     };
     return result;
-  }
+  };
 
-  handleSubmit = (event: SyntheticEvent<>) => {
+  const handleItemAdd = () => {
+    setTasks(tasks.concat([createTaskModel()]));
+  };
+
+  const handleItemChange = (id: number, event: any) => {
+    const { name, type, value, checked } = event.target;
+    setTasks(
+      tasks.map(i => {
+        if (i.id === id) {
+          i[name] = type === "checkbox" ? checked : value;
+        }
+        return i;
+      })
+    );
+  };
+
+  const handleItemRemove = (id: number) => {
+    setTasks(tasks.filter(i => i.id !== id));
+  };
+
+  const applyCategory = (id: number) => {
+    const category = categories.find(e => e.id === id);
+    if (!category) return;
+    const tags = category.tags;
+    const newLabels = templates
+      .filter(i => i.tags.some(t => tags.includes(t)))
+      .map(i => i.label);
+    if (newLabels.length > 0) {
+      const newTasks = newLabels.map(l => createTaskModel(l));
+      setTasks(tasks.concat(newTasks));
+    }
+  };
+
+  const handleSubmit = (event: SyntheticEvent<>) => {
     event.preventDefault();
-    const representation = this.state.tasks.map(mapToRepresentationModel);
+    const representation = tasks.map(mapToRepresentationModel);
     const data = encodeURIComponent(JSON.stringify(representation));
     window.open("events?descr=" + data, "_blank");
   };
 
-  render = () => (
+  return (
     <MainComponent
-      state={this.state}
-      handleItemAdd={this.handleItemAdd}
-      handleItemChange={this.handleItemChange}
-      handleItemRemove={this.handleItemRemove}
-      applyCategory={this.applyCategory}
-      handleSubmit={this.handleSubmit}
+      state={{
+        categories,
+        templates,
+        tasks,
+        isLoading,
+        isError
+      }}
+      handleItemAdd={handleItemAdd}
+      handleItemChange={handleItemChange}
+      handleItemRemove={handleItemRemove}
+      applyCategory={applyCategory}
+      handleSubmit={handleSubmit}
     />
   );
-}
+};
 
 export default MainContainer;
