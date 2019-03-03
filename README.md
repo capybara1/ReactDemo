@@ -42,6 +42,7 @@ Resources:
 - [Rules of Hooks - React](https://reactjs.org/docs/hooks-rules.html)
 - [Hooks FAQ - React](https://reactjs.org/docs/hooks-faq.html)
 - [How to fetch data with React Hooks?](https://www.robinwieruch.de/react-hooks-fetch-data/)
+- [TypeScript and React: Hooks](https://fettblog.eu/typescript-react/hooks/)
 
 ## React Component Libraries
 
