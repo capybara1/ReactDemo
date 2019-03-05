@@ -1,10 +1,43 @@
-import React from "react"; // Required for JSX
+//@flow
 
+import React from "react"; // Required for JSX
+import type { StatelessFunctionalComponent } from "react";
+
+import type { Category, Template, Task } from "../shared/types";
 import TaskList from "./TaskList";
 import CategoryList from "./CategoryList";
 import Spinner from "./Spinner";
 
-const MainComponent = props => {
+type State = {
+  categories: Category[],
+  templates: Template[],
+  tasks: Task[],
+  isLoading: boolean
+};
+
+type ApplyCategoryHandler = (id: string) => void;
+
+type ItemAddEventHandler = () => void;
+
+type ItemChangeEventHandler = (
+  id: string,
+  event: SyntheticInputEvent<>
+) => void;
+
+type ItemRemoveEventHandler = (id: string) => void;
+
+type SubmitEventHandler = (event: SyntheticEvent<>) => void;
+
+type Props = {
+  state: State,
+  applyCategory: ApplyCategoryHandler,
+  handleItemAdd: ItemAddEventHandler,
+  handleItemChange: ItemChangeEventHandler,
+  handleItemRemove: ItemRemoveEventHandler,
+  handleSubmit: SubmitEventHandler
+};
+
+const MainComponent: StatelessFunctionalComponent<Props> = props => {
   const renderForm = props => (
     <form onSubmit={props.handleSubmit}>
       <TaskList
@@ -40,15 +73,7 @@ const MainComponent = props => {
   );
   const result = (
     <main role="main" className="container">
-      {props.state.isError ? (
-        <div className="alert alert-danger" role="alert">
-          Something went wrong
-        </div>
-      ) : props.state.isLoading ? (
-        <Spinner />
-      ) : (
-        renderForm(props)
-      )}
+      {props.state.isLoading ? <Spinner /> : renderForm(props)}
     </main>
   );
   return result;

@@ -1,21 +1,23 @@
 // @flow
 
-import React, { useState, useEffect } from "react"; // Required for JSX
+import React, { useState, useEffect, useContext } from "react"; // Required for JSX
+import type { StatelessFunctionalComponent } from "react";
 
-import type { Category, Template, Task, TaskView } from "../shared/types";
+import type { Category, Template, Task } from "../shared/types";
+import UserInteractionContext from "../context/UserInteractionContext";
 import MainComponent from "./MainComponent";
 import { TODAY, generateId } from "../shared/Utils";
 import { mapToRepresentationModel } from "../shared/converters";
 
-const MainContainer = () => {
-  const [categories, setCategories] = useState([]);
-  const [templates, setTemplates] = useState([]);
-  const [tasks, setTasks] = useState([]);
+const MainContainer: StatelessFunctionalComponent<{}> = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [templates, setTemplates] = useState<Template[]>([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+
+  const userInteraction = useContext(UserInteractionContext);
 
   const fetchData = async () => {
-    setIsError(false);
     setIsLoading(true);
 
     try {
@@ -29,7 +31,10 @@ const MainContainer = () => {
       );
       setTemplates(data.templates);
     } catch (error) {
-      setIsError(true);
+      userInteraction.notify(
+        "Something went wrong: unable to load 'data.json'. Please ensure network connectivity and try again.",
+        "error"
+      );
     }
 
     setIsLoading(false);
@@ -52,7 +57,7 @@ const MainContainer = () => {
     setTasks(tasks.concat([createTaskModel()]));
   };
 
-  const handleItemChange = (id: number, event: any) => {
+  const handleItemChange = (id: string, event: SyntheticInputEvent<>) => {
     const { name, type, value, checked } = event.target;
     setTasks(
       tasks.map(i => {
@@ -64,11 +69,11 @@ const MainContainer = () => {
     );
   };
 
-  const handleItemRemove = (id: number) => {
+  const handleItemRemove = (id: string) => {
     setTasks(tasks.filter(i => i.id !== id));
   };
 
-  const applyCategory = (id: number) => {
+  const applyCategory = (id: string) => {
     const category = categories.find(e => e.id === id);
     if (!category) return;
     const tags = category.tags;
@@ -94,8 +99,7 @@ const MainContainer = () => {
         categories,
         templates,
         tasks,
-        isLoading,
-        isError
+        isLoading
       }}
       handleItemAdd={handleItemAdd}
       handleItemChange={handleItemChange}

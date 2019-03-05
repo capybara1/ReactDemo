@@ -88,6 +88,8 @@ Flow:
 - [Adding Flow - React](https://facebook.github.io/create-react-app/docs/adding-flow)
 - [TypeScript vs Flow - Github](https://github.com/niieani/typescript-vs-flowtype)
 - [Remove React PropTypes by using Flow Annotations (in CRA)](https://egghead.io/lessons/remove-react-proptypes-by-using-flow-annotations-in-cra)
+- [Type Reference | Flow](https://flow.org/en/docs/react/types/)
+- [Event Handling | Flow](https://flow.org/en/docs/react/events/)
 
 TypeScript:
 

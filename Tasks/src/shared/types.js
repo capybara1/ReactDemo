@@ -21,3 +21,14 @@ export type TaskView = {
   label: string,
   due?: string
 };
+
+export type NotificationLevel = "info" | "warn" | "error";
+
+export type UserNotification = {
+  message: string,
+  level: NotificationLevel
+};
+
+export type UserInteraction = {
+  notify: (message: string, level: NotificationLevel) => void
+};
