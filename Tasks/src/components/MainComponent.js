@@ -3,17 +3,10 @@
 import React from "react"; // Required for JSX
 import type { StatelessFunctionalComponent } from "react";
 
-import type { Category, Template, Task } from "../shared/types";
+import type { Category, Task } from "../shared/types";
 import TaskList from "./TaskList";
 import CategoryList from "./CategoryList";
 import Spinner from "./Spinner";
-
-type State = {
-  categories: Category[],
-  templates: Template[],
-  tasks: Task[],
-  isLoading: boolean
-};
 
 type ApplyCategoryHandler = (id: string) => void;
 
@@ -29,7 +22,9 @@ type ItemRemoveEventHandler = (id: string) => void;
 type SubmitEventHandler = (event: SyntheticEvent<>) => void;
 
 type Props = {
-  state: State,
+  categories: Category[],
+  tasks: Task[],
+  isLoading: boolean,
   applyCategory: ApplyCategoryHandler,
   handleItemAdd: ItemAddEventHandler,
   handleItemChange: ItemChangeEventHandler,
@@ -41,7 +36,7 @@ const MainComponent: StatelessFunctionalComponent<Props> = props => {
   const renderForm = props => (
     <form onSubmit={props.handleSubmit}>
       <TaskList
-        tasks={props.state.tasks}
+        tasks={props.tasks}
         handleItemChange={props.handleItemChange}
         handleItemRemove={props.handleItemRemove}
       />
@@ -56,7 +51,7 @@ const MainComponent: StatelessFunctionalComponent<Props> = props => {
       <div className="row">
         <div className="col-sm-8">
           <CategoryList
-            categories={props.state.categories}
+            categories={props.categories}
             applyCategory={props.applyCategory}
           />
         </div>
@@ -73,7 +68,7 @@ const MainComponent: StatelessFunctionalComponent<Props> = props => {
   );
   const result = (
     <main role="main" className="container">
-      {props.state.isLoading ? <Spinner /> : renderForm(props)}
+      {props.isLoading ? <Spinner /> : renderForm(props)}
     </main>
   );
   return result;
