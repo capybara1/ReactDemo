@@ -43,6 +43,7 @@ Resources:
 - [Hooks FAQ - React](https://reactjs.org/docs/hooks-faq.html)
 - [How to fetch data with React Hooks?](https://www.robinwieruch.de/react-hooks-fetch-data/)
 - [TypeScript and React: Hooks](https://fettblog.eu/typescript-react/hooks/)
+- [How to Use the useReducer Hook](https://daveceddia.com/usereducer-hook-examples/)
 
 ## React Component Libraries
 
@@ -60,6 +61,7 @@ Resources:
 
 - [Getting Started with Redux](https://egghead.io/courses/getting-started-with-redux)
 - [Redux Crash Course With React](https://www.youtube.com/watch?v=93p3LxR9xfM)
+- [Where and When to Fetch Data With Redux](https://daveceddia.com/where-fetch-data-redux/)
 
 ## Dependency Management
 
