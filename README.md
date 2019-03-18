@@ -98,6 +98,10 @@ TypeScript:
 - [TypeScript - JavaScript that scales](https://www.typescriptlang.org/)
 - [Adding TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript)
 
+## Animation
+
+- [React Transition Group](https://reactcommunity.org/react-transition-group/)
+
 ## Patterns
 
 - [React Patterns](https://reactpatterns.com/)
